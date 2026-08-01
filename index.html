@@ -87,6 +87,10 @@ input, select {
 📷 Barcode scannen
 </button>
 
+<button class="scan" onclick="startPhotoAI()">
+📸 Objekt fotografieren & analysieren
+</button>
+
 
 <div id="reader" style="width:300px;margin-top:20px;"></div>
 
@@ -649,6 +653,12 @@ let url =
 
 
 window.open(url,"_blank");
+
+}
+
+function startPhotoAI(){
+
+alert("📸 Fotoanalyse wird später gestartet");
 
 }
 
