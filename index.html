@@ -233,6 +233,24 @@ if(openData.title){
 document.getElementById("title").value =
 openData.title;
 
+
+// Autor holen
+
+if(openData.authors && openData.authors.length > 0){
+
+let authorResponse = await fetch(
+"https://openlibrary.org" + openData.authors[0].key + ".json"
+);
+
+let authorData = await authorResponse.json();
+
+
+document.getElementById("author").value =
+authorData.name || "";
+
+}
+
+
 alert("Buch gefunden: " + openData.title);
 
 }
