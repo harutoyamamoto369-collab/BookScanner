@@ -879,7 +879,54 @@ alert("Buch gespeichert!");
 }
 
 
+function editBook(index){
 
+
+let books =
+JSON.parse(localStorage.getItem("books")) || [];
+
+
+let book = books[index];
+
+
+
+document.getElementById("isbn").value =
+book.isbn || "";
+
+
+document.getElementById("title").value =
+book.title || "";
+
+
+document.getElementById("author").value =
+book.author || "";
+
+
+document.getElementById("condition").value =
+book.condition || "Sehr gut";
+
+
+document.getElementById("buyPriceInput").value =
+book.buyPrice || "";
+
+
+document.getElementById("price").value =
+book.price || "";
+
+
+document.getElementById("place").value =
+book.place || "";
+
+
+document.getElementById("note").value =
+book.note || "";
+
+
+
+alert("Artikel geladen - jetzt bearbeiten");
+
+
+}
 
 
 function showBooks(){
@@ -889,9 +936,7 @@ let books =
 JSON.parse(localStorage.getItem("books")) || [];
 
 
-
 let html="";
-
 
 
 books.forEach((b,index)=>{
@@ -912,13 +957,12 @@ parseFloat(b.buyPrice.replace(",", "."));
 
 html += `
 
-<div class="book">
+<div class="book" onclick="editBook(${index})" style="cursor:pointer;">
 
-<h3>📦 ${b.title}</h3>
+
+<h3>📦 ${b.title || "Ohne Titel"}</h3>
 
 Autor: ${b.author || "-"}<br>
-
-⭐ Zustand: ${b.condition}<br>
 
 💰 Einkauf: ${b.buyPrice || "-"} €<br>
 
@@ -926,9 +970,12 @@ Autor: ${b.author || "-"}<br>
 
 📈 Gewinn: ${gewinn.toFixed(2)} €<br>
 
-📦 Lager: ${b.place || "-"}<br>
+📦 Lager: ${b.place || "-"}
 
-📝 ${b.note || ""}
+
+<br><br>
+
+👉 Zum Bearbeiten anklicken
 
 
 </div>
@@ -941,9 +988,7 @@ Autor: ${b.author || "-"}<br>
 });
 
 
-
 document.getElementById("books").innerHTML = html;
-
 
 
 }
