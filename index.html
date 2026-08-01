@@ -103,6 +103,32 @@ style="display:none"
 onchange="analyzePhoto(this)"
 >
 
+<div class="book" id="aiResult">
+
+<h3>🤖 KI Einschätzung</h3>
+
+<p>
+<b>Objekt:</b>
+<span id="aiObject">-</span>
+</p>
+
+<p>
+<b>Wert geschätzt:</b>
+<span id="aiValue">-</span>
+</p>
+
+<p>
+<b>Maximal ankaufen:</b>
+<span id="aiBuy">-</span>
+</p>
+
+<p>
+<b>Empfehlung:</b>
+<span id="aiAdvice">-</span>
+</p>
+
+</div>
+
 
 
 <label>ISBN:</label>
@@ -683,10 +709,21 @@ return;
 }
 
 
-alert("📸 Foto wurde aufgenommen: " + file.name);
+document.getElementById("aiObject").innerHTML =
+"Analyse läuft...";
 
 
-// KI kommt als nächster Schritt
+document.getElementById("aiValue").innerHTML =
+"-";
+
+
+document.getElementById("aiBuy").innerHTML =
+"-";
+
+
+document.getElementById("aiAdvice").innerHTML =
+"Bitte warten";
+
 
 }
 
