@@ -721,11 +721,11 @@ selectedPhoto = file;
 
 
 document.getElementById("aiObject").innerHTML =
-"Foto aufgenommen";
+"Foto gespeichert";
 
 
 document.getElementById("aiValue").innerHTML =
-"Google Lens Suche";
+"Bereit für Google Lens";
 
 
 document.getElementById("aiBuy").innerHTML =
@@ -733,10 +733,7 @@ document.getElementById("aiBuy").innerHTML =
 
 
 document.getElementById("aiAdvice").innerHTML =
-"Bild wird an Google Lens gesendet";
-
-
-openGoogleLens();
+"Drücke den Google Lens Button";
 
 
 }
@@ -744,7 +741,6 @@ openGoogleLens();
 
 
 function openGoogleLens(){
-
 
 if(!selectedPhoto){
 
@@ -755,21 +751,8 @@ return;
 }
 
 
-// Bild in neuem Tab öffnen
-
-let imageURL = URL.createObjectURL(selectedPhoto);
-
-
-// Google Lens öffnen
-
-let lensURL =
-"https://lens.google.com/uploadbyurl?url=" 
-+ encodeURIComponent(imageURL);
-
-
-
 window.open(
-lensURL,
+"https://lens.google.com/",
 "_blank"
 );
 
