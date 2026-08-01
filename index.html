@@ -127,6 +127,10 @@ onchange="analyzePhoto(this)"
 <span id="aiAdvice">-</span>
 </p>
 
+<button onclick="openGoogleLens()">
+🔎 Mit Google Lens suchen
+</button>
+
 </div>
 
 
@@ -721,7 +725,7 @@ document.getElementById("aiObject").innerHTML =
 
 
 document.getElementById("aiValue").innerHTML =
-"Bereit für Suche";
+"Google Lens Suche";
 
 
 document.getElementById("aiBuy").innerHTML =
@@ -729,16 +733,45 @@ document.getElementById("aiBuy").innerHTML =
 
 
 document.getElementById("aiAdvice").innerHTML =
-"Google Lens öffnen";
+"Bild wird an Google Lens gesendet";
 
 
 openGoogleLens();
 
-function openGoogleLens(){
-
-alert("Google Lens Suche kommt später");
 
 }
+
+
+
+function openGoogleLens(){
+
+
+if(!selectedPhoto){
+
+alert("Bitte zuerst ein Foto machen");
+
+return;
+
+}
+
+
+// Bild in neuem Tab öffnen
+
+let imageURL = URL.createObjectURL(selectedPhoto);
+
+
+// Google Lens öffnen
+
+let lensURL =
+"https://lens.google.com/uploadbyurl?url=" 
++ encodeURIComponent(imageURL);
+
+
+
+window.open(
+lensURL,
+"_blank"
+);
 
 
 }
