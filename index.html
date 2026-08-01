@@ -183,6 +183,10 @@ input, select {
 🛒 eBay aktuelle Angebote
 </button>
 
+<button onclick="openEbayCompleted()">
+📋 eBay beendete Angebote
+</button>
+
 <button onclick="openEbaySold()">
 💰 eBay verkaufte Artikel
 </button>
@@ -622,6 +626,29 @@ alert("Fehler bei Spielsuche");
 
 }
 
+
+}
+
+function openEbayCompleted(){
+
+let code = getISBN();
+
+if(!code){
+
+alert("Bitte erst Barcode scannen!");
+
+return;
+
+}
+
+
+let url =
+"https://www.ebay.de/sch/i.html?_nkw="
++ code +
+"&LH_Complete=1";
+
+
+window.open(url,"_blank");
 
 }
 
