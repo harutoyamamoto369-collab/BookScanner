@@ -187,50 +187,70 @@ alert("Kamera Fehler: " + err);
 
 async function getBookData(isbn){
 
-
 isbn = isbn.replace(/[^0-9X]/gi,"");
 
+try {
 
-alert("Suche ISBN: " + isbn);
-
-
-
-try{
-
-
-let response = await fetch(
-
-"https://openlibrary.org/isbn/" + isbn + ".json"
-
+let googleResponse = await fetch(
+"https://www.googleapis.com/books/v1/volumes?q=isbn:" + isbn
 );
 
+let googleData = await googleResponse.json();
 
 
-let book = await response.json();
+if(googleData.items && googleData.items.length > 0){
 
+let book = googleData.items[0].volumeInfo;
 
 
 document.getElementById("title").value =
 book.title || "";
 
 
+document.getElementById("author").value =
+book.authors ? book.authors.join(", ") : "";
+
 
 alert("Buch gefunden: " + book.title);
 
-
+return;
 
 }
 
 
-catch(error){
+// zweite Suche
 
+let openResponse = await fetch(
+"https://openlibrary.org/isbn/" + isbn + ".json"
+);
+
+
+let openData = await openResponse.json();
+
+
+if(openData.title){
+
+document.getElementById("title").value =
+openData.title;
+
+alert("Buch gefunden: " + openData.title);
+
+}
+
+else {
 
 alert("Keine Buchdaten gefunden");
 
-
 }
 
 
+}
+
+catch(error){
+
+alert("Fehler bei der Suche");
+
+}
 
 }
 
