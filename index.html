@@ -158,6 +158,20 @@ input, select {
 <span id="buyPrice">-</span>
 </p>
 
+<br>
+
+<button onclick="openBooklooker()">
+📚 Booklooker Angebote
+</button>
+
+<button onclick="openEbayActive()">
+🛒 eBay aktuelle Angebote
+</button>
+
+<button onclick="openEbaySold()">
+💰 eBay verkaufte Artikel
+</button>
+
 </div>
 
 
@@ -441,6 +455,84 @@ let url =
 
 
 window.open(url, "_blank");
+
+}
+
+function getISBN(){
+
+return document.getElementById("isbn").value;
+
+}
+
+
+
+function openBooklooker(){
+
+let isbn = getISBN();
+
+if(!isbn){
+
+alert("Bitte erst Buch scannen!");
+
+return;
+
+}
+
+
+window.open(
+"https://www.booklooker.de/B%C3%BCcher/Angebote/fastSearch?isbn=" + isbn,
+"_blank"
+);
+
+}
+
+
+
+function openEbayActive(){
+
+let isbn = getISBN();
+
+if(!isbn){
+
+alert("Bitte erst Buch scannen!");
+
+return;
+
+}
+
+
+let url =
+"https://www.ebay.de/sch/i.html?_nkw=" 
++ isbn +
+"&LH_ItemCondition=3000";
+
+
+window.open(url,"_blank");
+
+}
+
+
+
+function openEbaySold(){
+
+let isbn = getISBN();
+
+if(!isbn){
+
+alert("Bitte erst Buch scannen!");
+
+return;
+
+}
+
+
+let url =
+"https://www.ebay.de/sch/i.html?_nkw="
++ isbn +
+"&LH_Sold=1&LH_Complete=1";
+
+
+window.open(url,"_blank");
 
 }
 
