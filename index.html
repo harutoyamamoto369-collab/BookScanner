@@ -201,6 +201,8 @@ scanner.stop();
 
 getBookData(decodedText);
 
+analyzeMarket(decodedText);
+
 },
 
 (errorMessage)=>{
@@ -401,7 +403,22 @@ alert("Fehler bei der Suche");
 
 
 
+async function analyzeMarket(isbn){
 
+document.getElementById("marketStatus").innerHTML =
+"🔎 Suche Marktpreise...";
+
+document.getElementById("booklookerPrice").innerHTML =
+"Wird gesucht...";
+
+document.getElementById("ebayPrice").innerHTML =
+"Wird gesucht...";
+
+document.getElementById("buyPrice").innerHTML =
+"Berechnung folgt...";
+
+
+}
 
 
 function saveBook(){
