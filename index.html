@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BookScanner</title>
+<script src="https://unpkg.com/html5-qrcode"></script>
 <link rel="manifest" href="manifest.json">
 
 <style>
@@ -69,9 +70,11 @@ input, select {
 
 <h1>📚 BookScanner</h1>
 
-<button class="scan">
+<button class="scan" onclick="startScanner()">
 📷 ISBN scannen
 </button>
+
+<div id="reader" style="width:300px;margin-top:20px;"></div>
 
 <label>ISBN:</label>
 <input id="isbn" placeholder="ISBN eingeben">
@@ -154,7 +157,32 @@ document.getElementById("books").innerHTML=html;
 }
 
 showBooks();
+function startScanner(){
 
+let scanner = new Html5Qrcode("reader");
+
+scanner.start(
+{ facingMode: "environment" },
+{
+fps: 10,
+qrbox: 250
+},
+(code)=>{
+
+document.getElementById("isbn").value = code;
+
+scanner.stop();
+
+alert("ISBN erkannt: " + code);
+
+},
+
+(error)=>{
+
+}
+);
+
+}
 </script>
 
 <script>
