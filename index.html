@@ -232,6 +232,36 @@ document.getElementById("author").value =
 }
 
 
+// NEU: Verlag
+
+if(book.publisher){
+
+document.getElementById("publisher").value =
+book.publisher;
+
+}
+
+
+// NEU: Erscheinungsjahr
+
+if(book.publishedDate){
+
+document.getElementById("year").value =
+book.publishedDate;
+
+}
+
+
+// NEU: Cover
+
+if(book.imageLinks){
+
+document.getElementById("cover").src =
+book.imageLinks.thumbnail;
+
+}
+
+
 alert("Buch gefunden: " + book.title);
 
 return;
