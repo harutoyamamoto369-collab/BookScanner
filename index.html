@@ -215,6 +215,12 @@ let book = googleData.items[0].volumeInfo;
 
 console.log(book);
 
+alert(
+"Verlag: " + (book.publisher || "leer") +
+"\nJahr: " + (book.publishedDate || "leer") +
+"\nCover: " + (book.imageLinks ? "JA" : "NEIN")
+);
+
 document.getElementById("title").value =
 book.title || "";
 
