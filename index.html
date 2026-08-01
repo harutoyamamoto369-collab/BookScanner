@@ -87,6 +87,10 @@ input, select {
 📷 Barcode scannen
 </button>
 
+<button class="scan" onclick="toggleTorch()">
+🔦 Licht an/aus
+</button>
+
 <button class="scan" onclick="startPhotoAI()">
 📸 Objekt fotografieren & suchen
 </button>
@@ -277,6 +281,7 @@ onkeydown="if(event.key==='Enter'){searchISBN();}"
 
 
 let scanner;
+let torchOn = false;
 
 
 function startScanner(){
@@ -333,7 +338,59 @@ alert("Kamera Fehler: " + err);
 
 }
 
+async function toggleTorch(){
 
+if(!scanner){
+
+alert("Bitte zuerst Barcode scannen");
+
+return;
+
+}
+
+
+try {
+
+
+let capabilities =
+scanner.getRunningTrackSettings();
+
+
+if(capabilities.torch){
+
+
+torchOn = !torchOn;
+
+
+await scanner.applyVideoConstraints({
+
+advanced:[
+{
+torch: torchOn
+}
+]
+
+});
+
+
+}
+else {
+
+alert("Dein Handy unterstützt kein Kameralicht");
+
+}
+
+
+}
+
+catch(error){
+
+alert("Licht konnte nicht aktiviert werden");
+
+}
+
+
+}
 
 
 
