@@ -207,8 +207,18 @@ document.getElementById("title").value =
 book.title || "";
 
 
+if(book.authors){
+
 document.getElementById("author").value =
-book.authors ? book.authors.join(", ") : "";
+book.authors.join(", ");
+
+}
+else{
+
+document.getElementById("author").value =
+"Autor unbekannt";
+
+}
 
 
 alert("Buch gefunden: " + book.title);
