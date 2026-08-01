@@ -282,7 +282,7 @@ let scanner = new Html5Qrcode("reader");
 
 
 scanner.start(
-{ facingMode: { exact: "environment" } },
+{ facingMode: "environment" },
 {
 fps: 10,
 qrbox: 250
@@ -870,11 +870,7 @@ alert("Artikel gespeichert!");
 
 showBooks();
 
-
-
-alert("Buch gespeichert!");
-
-
+alert("Artikel gespeichert!");
 
 }
 
