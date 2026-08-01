@@ -115,8 +115,11 @@ input, select {
 <label>Autor:</label>
 <input id="author" placeholder="Autor">
 
+<label>Plattform:</label>
+<input id="platform" placeholder="PS4, PS5, Switch, Xbox...">
 
-<label>Verlag:</label>
+
+<label>Hersteller / Publisher:</label>
 <input id="publisher" placeholder="Verlag">
 
 
@@ -417,7 +420,7 @@ alert("Buch gefunden: " + openData.title);
 
 else {
 
-alert("Keine Buchdaten gefunden");
+searchGame(isbn);
 
 }
 
@@ -546,6 +549,79 @@ else if(code.length >= 12){
 category.value = "Videospiel";
 
 }
+
+}
+
+async function searchGame(code){
+
+try {
+
+let response = await fetch(
+"https://api.rawg.io/api/games?search=" + code
+);
+
+
+let data = await response.json();
+
+
+if(data.results && data.results.length > 0){
+
+
+let game = data.results[0];
+
+
+document.getElementById("title").value =
+game.name || "";
+
+
+document.getElementById("year").value =
+game.released || "";
+
+
+document.getElementById("platform").value =
+game.platforms ?
+game.platforms.map(p => p.platform.name).join(", ")
+:
+"";
+
+
+document.getElementById("publisher").value =
+game.publishers ?
+game.publishers.map(p => p.name).join(", ")
+:
+"";
+
+
+if(game.background_image){
+
+document.getElementById("cover").src =
+game.background_image;
+
+}
+
+
+alert("Spiel gefunden: " + game.name);
+
+
+}
+
+else {
+
+alert("Kein Spiel gefunden");
+
+}
+
+
+}
+
+catch(error){
+
+console.log(error);
+
+alert("Fehler bei Spielsuche");
+
+}
+
 
 }
 
