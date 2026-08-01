@@ -187,29 +187,34 @@ async function getBookData(isbn){
 
 isbn = isbn.replace(/[^0-9X]/gi, "");
 
-alert("Suche nach ISBN: " + isbn);
-
 try {
 
 let response = await fetch(
-"https://www.googleapis.com/books/v1/volumes?q=isbn:" + isbn
+"https://openlibrary.org/isbn/" + isbn + ".json"
 );
 
-let data = await response.json();
+let book = await response.json();
 
-console.log(data);
-
-if(data.items && data.items.length > 0){
-
-let book = data.items[0].volumeInfo;
+if(book){
 
 document.getElementById("title").value =
 book.title || "";
 
-document.getElementById("author").value =
-book.authors ? book.authors.join(", ") : "";
+alert("Buch gefunden: " + book.title);
 
-alert("Gefunden: " + book.title);
+}
+else {
+
+alert("Keine Buchdaten gefunden");
+
+}
+
+}
+catch(error){
+
+alert("Keine Daten gefunden");
+
+}
 
 }
 else {
