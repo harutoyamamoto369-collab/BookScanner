@@ -88,7 +88,7 @@ input, select {
 </button>
 
 <button class="scan" onclick="startPhotoAI()">
-📸 Objekt fotografieren & analysieren
+📸 Objekt fotografieren & suchen
 </button>
 
 
@@ -105,7 +105,7 @@ onchange="analyzePhoto(this)"
 
 <div class="book" id="aiResult">
 
-<h3>🤖 KI Einschätzung</h3>
+<h3>🔎 Bildersuche</h3>
 
 <p>
 <b>Objekt:</b>
@@ -698,6 +698,9 @@ document.getElementById("photoInput").click();
 }
 
 
+let selectedPhoto = null;
+
+
 function analyzePhoto(input){
 
 let file = input.files[0];
@@ -709,12 +712,15 @@ return;
 }
 
 
+selectedPhoto = file;
+
+
 document.getElementById("aiObject").innerHTML =
-"Analyse läuft...";
+"Foto aufgenommen";
 
 
 document.getElementById("aiValue").innerHTML =
-"-";
+"Bereit für Suche";
 
 
 document.getElementById("aiBuy").innerHTML =
@@ -722,7 +728,48 @@ document.getElementById("aiBuy").innerHTML =
 
 
 document.getElementById("aiAdvice").innerHTML =
-"Bitte warten";
+"Google Lens öffnen";
+
+
+openGoogleLens();
+
+
+}
+
+let selectedPhoto = null;
+
+
+function analyzePhoto(input){
+
+let file = input.files[0];
+
+if(!file){
+
+return;
+
+}
+
+
+selectedPhoto = file;
+
+
+document.getElementById("aiObject").innerHTML =
+"Foto aufgenommen";
+
+
+document.getElementById("aiValue").innerHTML =
+"Bereit für Suche";
+
+
+document.getElementById("aiBuy").innerHTML =
+"-";
+
+
+document.getElementById("aiAdvice").innerHTML =
+"Google Lens öffnen";
+
+
+openGoogleLens();
 
 
 }
