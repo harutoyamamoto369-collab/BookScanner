@@ -185,12 +185,20 @@ onchange="analyzePhoto(this)"
 
 
 
-<label>Preis:</label>
-<input id="price" placeholder="z.B. 4.99 €">
+<label>💰 Einkaufspreis:</label>
+<input id="buyPriceInput" placeholder="z.B. 2.00 €">
 
 
-<label>Lagerplatz:</label>
-<input id="place" placeholder="Kiste 1">
+<label>🏷 Verkaufspreis:</label>
+<input id="price" placeholder="z.B. 12.99 €">
+
+
+<label>📦 Lagerplatz:</label>
+<input id="place" placeholder="z.B. Kiste A1">
+
+
+<label>📝 Notiz:</label>
+<input id="note" placeholder="z.B. Flohmarkt Fund">
 
 <h2>📊 Marktanalyse</h2>
 
@@ -762,7 +770,6 @@ window.open(
 function saveBook(){
 
 
-
 let book = {
 
 
@@ -782,12 +789,20 @@ condition:
 document.getElementById("condition").value,
 
 
+buyPrice:
+document.getElementById("buyPriceInput").value,
+
+
 price:
 document.getElementById("price").value,
 
 
 place:
-document.getElementById("place").value
+document.getElementById("place").value,
+
+
+note:
+document.getElementById("note").value
 
 
 
@@ -808,6 +823,18 @@ localStorage.setItem(
 "books",
 JSON.stringify(books)
 );
+
+
+
+showBooks();
+
+
+
+alert("Artikel gespeichert!");
+
+
+
+}
 
 
 
@@ -837,24 +864,48 @@ let html="";
 
 
 
-books.forEach(b=>{
+books.forEach((b,index)=>{
+
+
+let gewinn = 0;
+
+
+if(b.buyPrice && b.price){
+
+gewinn =
+parseFloat(b.price.replace(",", ".")) -
+parseFloat(b.buyPrice.replace(",", "."));
+
+}
+
 
 
 html += `
 
 <div class="book">
 
-<b>${b.title}</b><br>
+<h3>📦 ${b.title}</h3>
 
-${b.author}<br>
+Autor: ${b.author || "-"}<br>
 
-Preis: ${b.price}<br>
+⭐ Zustand: ${b.condition}<br>
 
-Lagerplatz: ${b.place}
+💰 Einkauf: ${b.buyPrice || "-"} €<br>
+
+🏷 Verkauf: ${b.price || "-"} €<br>
+
+📈 Gewinn: ${gewinn.toFixed(2)} €<br>
+
+📦 Lager: ${b.place || "-"}<br>
+
+📝 ${b.note || ""}
+
 
 </div>
 
+
 `;
+
 
 
 });
