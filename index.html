@@ -437,26 +437,6 @@ document.getElementById("buyPrice").innerHTML =
 
 }
 
-function openBooklooker(){
-
-let isbn = document.getElementById("isbn").value;
-
-if(!isbn){
-
-alert("Bitte erst ein Buch scannen!");
-
-return;
-
-}
-
-
-let url =
-"https://www.booklooker.de/B%C3%BCcher/Angebote/fastSearch?isbn=" + isbn;
-
-
-window.open(url, "_blank");
-
-}
 
 function getISBN(){
 
