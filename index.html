@@ -187,6 +187,8 @@ async function getBookData(isbn){
 
 isbn = isbn.replace(/[^0-9X]/gi, "");
 
+alert("Suche nach ISBN: " + isbn);
+
 try {
 
 let response = await fetch(
@@ -194,6 +196,8 @@ let response = await fetch(
 );
 
 let data = await response.json();
+
+console.log(data);
 
 if(data.items && data.items.length > 0){
 
@@ -205,7 +209,21 @@ book.title || "";
 document.getElementById("author").value =
 book.authors ? book.authors.join(", ") : "";
 
-alert("Buch gefunden: " + book.title);
+alert("Gefunden: " + book.title);
+
+}
+else {
+
+alert("Keine Daten von Google bekommen");
+
+}
+
+}
+catch(error){
+
+alert("Fehler: " + error);
+
+}
 
 }
 else {
