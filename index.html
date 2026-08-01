@@ -352,8 +352,22 @@ return;
 try {
 
 
-let capabilities =
-scanner.getRunningTrackSettings();
+let video = document.querySelector("#reader video");
+
+
+if(!video){
+
+alert("Kamera noch nicht gestartet");
+
+return;
+
+}
+
+
+let track = video.srcObject.getVideoTracks()[0];
+
+
+let capabilities = track.getCapabilities();
 
 
 if(capabilities.torch){
@@ -362,7 +376,7 @@ if(capabilities.torch){
 torchOn = !torchOn;
 
 
-await scanner.applyVideoConstraints({
+await track.applyConstraints({
 
 advanced:[
 {
@@ -374,9 +388,10 @@ torch: torchOn
 
 
 }
+
 else {
 
-alert("Dein Handy unterstützt kein Kameralicht");
+alert("Dieses Gerät gibt den Kamerablitz nicht an den Browser frei");
 
 }
 
@@ -385,7 +400,9 @@ alert("Dein Handy unterstützt kein Kameralicht");
 
 catch(error){
 
-alert("Licht konnte nicht aktiviert werden");
+console.log(error);
+
+alert("Fehler beim Licht: " + error);
 
 }
 
