@@ -94,6 +94,15 @@ input, select {
 
 <div id="reader" style="width:300px;margin-top:20px;"></div>
 
+<input 
+type="file" 
+id="photoInput" 
+accept="image/*" 
+capture="environment" 
+style="display:none"
+onchange="analyzePhoto(this)"
+>
+
 
 
 <label>ISBN:</label>
@@ -658,7 +667,26 @@ window.open(url,"_blank");
 
 function startPhotoAI(){
 
-alert("📸 Fotoanalyse wird später gestartet");
+document.getElementById("photoInput").click();
+
+}
+
+
+function analyzePhoto(input){
+
+let file = input.files[0];
+
+if(!file){
+
+return;
+
+}
+
+
+alert("📸 Foto wurde aufgenommen: " + file.name);
+
+
+// KI kommt als nächster Schritt
 
 }
 
