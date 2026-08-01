@@ -1,0 +1,9 @@
+{
+  "name": "BookScanner",
+  "short_name": "Books",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2196F3",
+  "description": "Bücher verwalten und für Booklooker vorbereiten"
+}
