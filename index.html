@@ -159,28 +159,31 @@ document.getElementById("books").innerHTML=html;
 showBooks();
 function startScanner(){
 
-let scanner = new Html5Qrcode("reader");
+const scanner = new Html5Qrcode("reader");
 
 scanner.start(
 { facingMode: "environment" },
 {
 fps: 10,
-qrbox: 250
+qrbox: { width: 250, height: 250 }
 },
-(code)=>{
+(decodedText) => {
 
-document.getElementById("isbn").value = code;
+document.getElementById("isbn").value = decodedText;
+
+alert("ISBN erkannt: " + decodedText);
 
 scanner.stop();
 
-alert("ISBN erkannt: " + code);
-
 },
-
-(error)=>{
+(errorMessage) => {
 
 }
-);
+).catch(err => {
+
+alert("Kamera konnte nicht gestartet werden: " + err);
+
+});
 
 }
 </script>
