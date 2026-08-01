@@ -235,22 +235,12 @@ document.getElementById("author").value =
 
 // NEU: Verlag
 
-if(book.publisher){
-
 document.getElementById("publisher").value =
-book.publisher;
+book.publisher || "Nicht gefunden";
 
-}
-
-
-// NEU: Erscheinungsjahr
-
-if(book.publishedDate){
 
 document.getElementById("year").value =
-book.publishedDate;
-
-}
+book.publishedDate || "Nicht gefunden";
 
 
 // NEU: Cover
@@ -259,6 +249,12 @@ if(book.imageLinks){
 
 document.getElementById("cover").src =
 book.imageLinks.thumbnail;
+
+}
+else {
+
+document.getElementById("cover").alt =
+"Kein Cover verfügbar";
 
 }
 
