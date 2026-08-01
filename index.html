@@ -1,256 +1,382 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>BookScanner</title>
+
 <script src="https://unpkg.com/html5-qrcode"></script>
+
 <link rel="manifest" href="manifest.json">
 
 <style>
+
 body {
     font-family: Arial, sans-serif;
-    background: #f2f2f2;
-    margin: 0;
-    padding: 20px;
+    background:#f2f2f2;
+    margin:0;
+    padding:20px;
 }
 
 .container {
-    max-width: 500px;
-    margin: auto;
-    background: white;
-    padding: 20px;
-    border-radius: 15px;
+    max-width:500px;
+    margin:auto;
+    background:white;
+    padding:20px;
+    border-radius:15px;
 }
 
 h1 {
-    text-align: center;
+    text-align:center;
 }
 
 button {
-    width: 100%;
-    padding: 15px;
-    margin-top: 10px;
-    font-size: 18px;
-    border-radius: 10px;
-    border: none;
-    cursor: pointer;
+    width:100%;
+    padding:15px;
+    margin-top:10px;
+    font-size:18px;
+    border:none;
+    border-radius:10px;
 }
 
 .scan {
-    background: #2196F3;
-    color: white;
+    background:#2196F3;
+    color:white;
 }
 
 .save {
-    background: #4CAF50;
-    color: white;
+    background:#4CAF50;
+    color:white;
 }
 
 input, select {
-    width: 100%;
-    padding: 12px;
-    margin-top: 8px;
-    font-size: 16px;
+
+    width:100%;
+    padding:12px;
+    margin-top:8px;
+    font-size:16px;
+
 }
 
 .book {
-    background: #eee;
-    margin-top: 15px;
-    padding: 10px;
-    border-radius: 10px;
+
+    background:#eee;
+    margin-top:15px;
+    padding:10px;
+    border-radius:10px;
+
 }
+
 </style>
 
 </head>
 
+
 <body>
+
 
 <div class="container">
 
+
 <h1>📚 BookScanner</h1>
+
 
 <button class="scan" onclick="startScanner()">
 📷 ISBN scannen
 </button>
 
+
 <div id="reader" style="width:300px;margin-top:20px;"></div>
 
+
+
 <label>ISBN:</label>
-<input id="isbn" placeholder="ISBN eingeben">
+<input id="isbn" placeholder="ISBN">
+
 
 <label>Titel:</label>
 <input id="title" placeholder="Buchtitel">
 
+
 <label>Autor:</label>
 <input id="author" placeholder="Autor">
 
+
 <label>Zustand:</label>
+
 <select id="condition">
+
 <option>Sehr gut</option>
 <option>Gut</option>
 <option>Akzeptabel</option>
+
 </select>
+
+
 
 <label>Preis:</label>
 <input id="price" placeholder="z.B. 4.99 €">
 
+
 <label>Lagerplatz:</label>
-<input id="place" placeholder="z.B. Kiste 1">
+<input id="place" placeholder="Kiste 1">
+
+
 
 <button class="save" onclick="saveBook()">
 💾 Buch speichern
 </button>
 
+
+
 <h2>Meine Bücher</h2>
 
+
 <div id="books"></div>
+
 
 </div>
 
 
+
 <script>
 
-function saveBook(){
 
-let book = {
-isbn: document.getElementById("isbn").value,
-title: document.getElementById("title").value,
-author: document.getElementById("author").value,
-condition: document.getElementById("condition").value,
-price: document.getElementById("price").value,
-place: document.getElementById("place").value
-};
-
-let books = JSON.parse(localStorage.getItem("books")) || [];
-
-books.push(book);
-
-localStorage.setItem("books", JSON.stringify(books));
-
-showBooks();
-
-alert("Buch gespeichert!");
-
-}
-
-
-function showBooks(){
-
-let books = JSON.parse(localStorage.getItem("books")) || [];
-
-let html="";
-
-books.forEach(b=>{
-html += `
-<div class="book">
-<b>${b.title}</b><br>
-${b.author}<br>
-Zustand: ${b.condition}<br>
-Preis: ${b.price}<br>
-Lagerplatz: ${b.place}
-</div>`;
-});
-
-document.getElementById("books").innerHTML=html;
-
-}
-
-showBooks();
 function startScanner(){
+
 
 let scanner = new Html5Qrcode("reader");
 
+
 scanner.start(
-{ facingMode: "environment" },
+
+{ facingMode:"environment" },
+
 {
-fps: 10,
-qrbox: 250
+fps:10,
+qrbox:250
 },
+
+
 (code)=>{
+
 
 document.getElementById("isbn").value = code;
 
+
 scanner.stop();
+
 
 getBookData(code);
 
+
+
 },
 
-(error)=>{
 
-}
+(error)=>{}
+
+
+
 );
 
+
 }
+
+
+
+
+
 async function getBookData(isbn){
 
-isbn = isbn.replace(/[^0-9X]/gi, "");
 
-try {
+isbn = isbn.replace(/[^0-9X]/gi,"");
+
+
+alert("Suche ISBN: " + isbn);
+
+
+
+try{
+
 
 let response = await fetch(
+
 "https://openlibrary.org/isbn/" + isbn + ".json"
+
 );
+
+
 
 let book = await response.json();
 
-if(book){
+
 
 document.getElementById("title").value =
 book.title || "";
 
+
+
 alert("Buch gefunden: " + book.title);
 
+
+
 }
-else {
+
+
+catch(error){
+
 
 alert("Keine Buchdaten gefunden");
 
-}
-
-}
-catch(error){
-
-alert("Keine Daten gefunden");
 
 }
 
-}
-else {
 
-alert("Keine Daten von Google bekommen");
 
 }
 
+
+
+
+
+
+function saveBook(){
+
+
+
+let book = {
+
+
+isbn:
+document.getElementById("isbn").value,
+
+
+title:
+document.getElementById("title").value,
+
+
+author:
+document.getElementById("author").value,
+
+
+condition:
+document.getElementById("condition").value,
+
+
+price:
+document.getElementById("price").value,
+
+
+place:
+document.getElementById("place").value
+
+
+
+};
+
+
+
+let books =
+JSON.parse(localStorage.getItem("books")) || [];
+
+
+
+books.push(book);
+
+
+
+localStorage.setItem(
+"books",
+JSON.stringify(books)
+);
+
+
+
+showBooks();
+
+
+
+alert("Buch gespeichert!");
+
+
+
 }
-catch(error){
 
-alert("Fehler: " + error);
+
+
+
+
+function showBooks(){
+
+
+let books =
+JSON.parse(localStorage.getItem("books")) || [];
+
+
+
+let html="";
+
+
+
+books.forEach(b=>{
+
+
+html += `
+
+<div class="book">
+
+<b>${b.title}</b><br>
+
+${b.author}<br>
+
+Preis: ${b.price}<br>
+
+Lagerplatz: ${b.place}
+
+</div>
+
+`;
+
+
+});
+
+
+
+document.getElementById("books").innerHTML = html;
+
+
 
 }
 
-}
-else {
 
-alert("Google hat keine Daten für ISBN gefunden: " + isbn);
+showBooks();
 
-}
 
-}
-catch(error){
 
-alert("Fehler bei der Buchsuche");
-
-}
-
-}
 </script>
+
+
+
 
 <script>
-if ("serviceWorker" in navigator) {
-navigator.serviceWorker.register("service-worker.js");
+
+
+if("serviceWorker" in navigator){
+
+navigator.serviceWorker.register(
+"service-worker.js"
+);
+
 }
+
+
 </script>
+
+
+
 </body>
+
 </html>
