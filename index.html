@@ -84,7 +84,7 @@ input, select {
 
 
 <button class="scan" onclick="startScanner()">
-📷 ISBN scannen
+📷 Barcode scannen
 </button>
 
 
@@ -94,6 +94,18 @@ input, select {
 
 <label>ISBN:</label>
 <input id="isbn" placeholder="ISBN">
+
+<label>Kategorie:</label>
+
+<select id="category">
+
+<option>Buch</option>
+<option>Videospiel</option>
+<option>DVD / Blu-ray</option>
+<option>CD</option>
+<option>Schallplatte</option>
+
+</select>
 
 
 <label>Titel:</label>
@@ -215,6 +227,8 @@ qrbox: 250
 document.getElementById("isbn").value = decodedText;
 
 scanner.stop();
+
+detectCategory(decodedText);
 
 getBookData(decodedText);
 
@@ -513,6 +527,25 @@ let url =
 
 
 window.open(url,"_blank");
+
+}
+
+function detectCategory(code){
+
+let category = document.getElementById("category");
+
+
+if(code.startsWith("978") || code.startsWith("979")){
+
+category.value = "Buch";
+
+}
+
+else if(code.length >= 12){
+
+category.value = "Videospiel";
+
+}
 
 }
 
