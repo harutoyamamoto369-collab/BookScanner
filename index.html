@@ -698,43 +698,6 @@ document.getElementById("photoInput").click();
 }
 
 
-let selectedPhoto = null;
-
-
-function analyzePhoto(input){
-
-let file = input.files[0];
-
-if(!file){
-
-return;
-
-}
-
-
-selectedPhoto = file;
-
-
-document.getElementById("aiObject").innerHTML =
-"Foto aufgenommen";
-
-
-document.getElementById("aiValue").innerHTML =
-"Bereit für Suche";
-
-
-document.getElementById("aiBuy").innerHTML =
-"-";
-
-
-document.getElementById("aiAdvice").innerHTML =
-"Google Lens öffnen";
-
-
-openGoogleLens();
-
-
-}
 
 let selectedPhoto = null;
 
