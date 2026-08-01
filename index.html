@@ -215,12 +215,6 @@ let book = googleData.items[0].volumeInfo;
 
 console.log(book);
 
-alert(
-"Verlag: " + (book.publisher || "leer") +
-"\nJahr: " + (book.publishedDate || "leer") +
-"\nCover: " + (book.imageLinks ? "JA" : "NEIN")
-);
-
 document.getElementById("title").value =
 book.title || "";
 
@@ -264,6 +258,59 @@ document.getElementById("cover").alt =
 
 }
 
+// Zusätzliche Daten von Open Library holen
+
+try {
+
+let openResponse = await fetch(
+"https://openlibrary.org/isbn/" + isbn + ".json"
+);
+
+let openData = await openResponse.json();
+
+
+// Verlag ergänzen falls leer
+
+if(
+document.getElementById("publisher").value === "Nicht gefunden"
+&& openData.publishers
+){
+
+document.getElementById("publisher").value =
+openData.publishers[0];
+
+}
+
+
+// Jahr ergänzen falls leer
+
+if(
+document.getElementById("year").value === "Nicht gefunden"
+&& openData.publish_date
+){
+
+document.getElementById("year").value =
+openData.publish_date;
+
+}
+
+
+// Cover von Open Library
+
+if(!book.imageLinks){
+
+document.getElementById("cover").src =
+"https://covers.openlibrary.org/b/isbn/" + isbn + "-M.jpg";
+
+}
+
+
+}
+catch(e){
+
+console.log("Open Library keine Zusatzdaten");
+
+}
 
 alert("Buch gefunden: " + book.title);
 
