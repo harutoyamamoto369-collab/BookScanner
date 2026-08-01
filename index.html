@@ -159,31 +159,65 @@ document.getElementById("books").innerHTML=html;
 showBooks();
 function startScanner(){
 
-const scanner = new Html5Qrcode("reader");
+let scanner = new Html5Qrcode("reader");
 
 scanner.start(
 { facingMode: "environment" },
 {
 fps: 10,
-qrbox: { width: 250, height: 250 }
+qrbox: 250
 },
-(decodedText) => {
+(code)=>{
 
-document.getElementById("isbn").value = decodedText;
-
-alert("ISBN erkannt: " + decodedText);
+document.getElementById("isbn").value = code;
 
 scanner.stop();
 
+getBookData(code);
+
 },
-(errorMessage) => {
+
+(error)=>{
 
 }
-).catch(err => {
+);
 
-alert("Kamera konnte nicht gestartet werden: " + err);
+}
+async function getBookData(isbn){
 
-});
+try {
+
+let response = await fetch(
+"https://www.googleapis.com/books/v1/volumes?q=isbn:" + isbn
+);
+
+let data = await response.json();
+
+if(data.totalItems > 0){
+
+let book = data.items[0].volumeInfo;
+
+document.getElementById("title").value =
+book.title || "";
+
+document.getElementById("author").value =
+book.authors ? book.authors.join(", ") : "";
+
+alert("Buch gefunden: " + book.title);
+
+}
+else {
+
+alert("Keine Buchdaten gefunden");
+
+}
+
+}
+catch(error){
+
+alert("Fehler bei der Buchsuche");
+
+}
 
 }
 </script>
