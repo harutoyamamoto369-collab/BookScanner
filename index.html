@@ -185,10 +185,12 @@ getBookData(code);
 }
 async function getBookData(isbn){
 
+isbn = isbn.replace(/[^0-9X]/gi, "");
+
 try {
 
 let response = await fetch(
-"https://www.googleapis.com/books/v1/volumes?q=isbn:" + isbn
+"https://www.googleapis.com/books/v1/volumes?q=" + isbn
 );
 
 let data = await response.json();
