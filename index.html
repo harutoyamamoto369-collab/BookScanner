@@ -136,7 +136,15 @@ onchange="analyzePhoto(this)"
 
 
 <label>ISBN:</label>
-<input id="isbn" placeholder="ISBN">
+<input 
+id="isbn" 
+placeholder="ISBN eingeben"
+onkeydown="if(event.key==='Enter'){searchISBN();}"
+>
+
+<button class="scan" onclick="searchISBN()">
+🔎 ISBN suchen
+</button>
 
 <label>Kategorie:</label>
 
@@ -763,6 +771,28 @@ window.open(
 "https://lens.google.com/",
 "_blank"
 );
+
+
+}
+
+function searchISBN(){
+
+let isbn = document.getElementById("isbn").value;
+
+
+if(!isbn){
+
+alert("Bitte ISBN eingeben");
+
+return;
+
+}
+
+
+getBookData(isbn);
+
+
+analyzeMarket(isbn);
 
 
 }
